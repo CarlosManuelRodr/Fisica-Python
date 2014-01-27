@@ -1,0 +1,180 @@
+%%% acentos en LaTeX
+\catcode`¿=13
+\catcode`á=13
+\catcode`é=13
+\catcode`í=13
+\catcode`ó=13
+\catcode`ú=13
+\catcode`ñ=13
+\catcode`Ó=13
+
+\def¿{?`}
+\defá{\'a}
+\defé{\'e}
+\defí{\'i}
+\defó{\'o}
+\defú{\'u}
+\defñ{\~n}
+\defÓ{\'O}%%% acentos en LaTeX 
+
+% Figures within a column...
+\documentclass[a4paper,12pt]{article}
+
+\title{Péndulo doble}
+\date{}
+ 
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[spanish]{babel}
+
+\usepackage{multicol}
+\usepackage{hyperref}
+\usepackage{amsfonts}
+
+\begin{document}
+\maketitle
+
+\section{Introducción}
+Se plantea y se obtienen las ecuaciones de movimiento del sistema de doble péndulo a partir de la ecuación de Euler-Lagrante.
+Se describen también los modos normales de oscilación del sistema. Debido a que el sistema no tiene solución analítica se
+obtiene una solución numérica que se implementa en una simulación en Python.
+
+\section{Planteamiento del problema}
+Considere un sistema formado por dos masas colgando de cuerdas de masa despreciable y sin fricción, donde las masas están sujetas a la
+acción de la gravedad. Se desea describir el movimiento de ambas masas. Debido a que las posiciones de cada masa se pueden describir en función
+de su ángulo respecto a la normal del plano superior resultará conveniente plantear el problema en coordenadas polares. Se empezará analizando el
+sistema descrito en la figura 1.
+
+\begin{figure}[h]
+	\centering
+		\includegraphics[width=0.50\textwidth]{Diagrama.png}
+	\caption{Diagrama de cuerpo libre}
+\end{figure}
+
+Se describe al vector $\vec{r_1}$ en función de los ángulos $\theta_1$ y $\theta_2$ como
+\[
+	\vec{r_1} = l(sen(\theta_1)\hat{i} + cos(\theta_1)\hat{j})
+\]
+
+cuya derivada es
+\[
+	\dot{\vec{r_1}} = l\dot{\theta_1}cos(\theta_1)\hat{i}-l\dot{\theta_1}sen(\theta_1)\hat{j}
+\]
+
+entonces el cuadrado del módulo de $\dot{\vec{r_1}}$ queda
+\begin{equation}
+	\dot{\vec{r_1}}^2 = l^2 \dot{\theta_1}^2
+\end{equation}
+
+Análogamente para $\vec{r_2}$
+\[
+	\vec{r_2} = l(sen(\theta_1) + sen(\theta_2))\hat{i} + l(cos(\theta_1) + cos(\theta_2))\hat{j}
+\]
+
+Su derivada
+\[
+	\dot{\vec{r_2}} = (\dot{\theta_1}l cos(\theta_1) + \dot{\theta_2}l cos(\theta_2))\hat{i} - (\dot{\theta_1}l sin(\theta_1) + \dot{\theta_2}l sin(\theta_2))\hat{j}
+\]
+
+El cuadrado de su módulo queda
+\begin{equation}
+	\dot{\vec{r_2}} = l^2 [\dot{\theta_1}^2 + \dot{\theta_2}^2 + 2\dot{\theta_1}\dot{\theta_2}cos(\theta_1-\theta_2)]
+\end{equation}
+
+De esta manera se puede describir la energía cinética del sistema como
+\begin{align}
+	T = T_1 + T_2 = \frac{1}{2} m_1 \dot{\vec{r_1}} + \frac{1}{2} m_2 \dot{\vec{r_2}} \nonumber \\
+	 = \frac{1}{2} m_1 l^2 \dot{\theta_1}^2 + \frac{1}{2} m_2 l^2 [\dot{\theta_1}^2 + \dot{\theta_2}^2 + 2\dot{\theta_1}\dot{\theta_2}cos(\theta_1-\theta_2)] \nonumber \\
+	 = \frac{1}{2} l^2 [\dot{\theta_1}^2 (m_1 + m_2) + \dot{\theta_2}^2 m_2 + 2 m_2 \dot{\theta_1} \dot{\theta_2}] \nonumber
+\end{align}
+
+Y la energía potencial se define como
+\begin{align}
+	V = V_1 + V_2 = m_1 g r_{1y} + m_2 g r_{2y} = -m_1 g l cos(\theta_1) - m_2 g l(cos(\theta_1)+cos(\theta_2)) \nonumber \\
+	  = -gl((m_1+m_2)cos(\theta_1)+m_2 cos(\theta_2)) \nonumber
+\end{align}
+
+De estas magnitudes se obtiene el lagrangiano $\mathcal{L} = T - V$
+\begin{align}
+	\mathcal{L} = \frac{1}{2} l^2 [\dot{\theta_1}^2 (m_1 + m_2) + \dot{\theta_2}^2 m_2 + 2 m_2 \dot{\theta_1} \dot{\theta_2}] \nonumber \\
+				+ gl((m_1+m_2)cos(\theta_1)+m_2 cos(\theta_2))
+\end{align}
+
+Utilizando la ecuación de Euler-Lagrange
+\[
+	{d\over dt }\left({\partial L\over\partial \dot{\theta}_i}\right) - {\partial L\over\partial \theta_i} = 0
+\]
+se obtienen las ecuaciones de movimiento para el sistema.
+
+Resolviendo para $\theta_1$
+\begin{align}
+	{d\over dt }\left[ \frac{1}{2} l^2 (2 \dot{\theta_1}(m_1 + m_2) + 2m_2 \dot{\theta_2} cos(\theta_1 - \theta_2)) \right] \nonumber \\
+	= -gl(m_1 + m_2) sen(\theta_1) - m_2 \dot{\theta_1} \dot{\theta_2} l^2 sen(\theta_1 - \theta_2) \nonumber
+\end{align}
+
+\begin{align}
+	l^2 \ddot{\theta_1} (m_1 + m_2) + m_2 l^2 \ddot{\theta_2} cos(\theta_1 - \theta_2) = -m_2 l^2 \dot{\theta_2}^2 sen(\theta_1 - \theta_2) \nonumber \\
+	- gl(m_1 + m_2) sen(\theta_1)
+\end{align}
+
+Resolviendo para $\theta_2$
+\begin{align}
+	{d\over dt }\left[ \frac{1}{2} l^2 (2m_2 \dot{\theta_2} + 2m_2 \dot{\theta_1} cos(\theta_1 - \theta_2)) \right] \nonumber \\
+	= -g l m_2 sen(\theta_2) + l^2 m_2 \dot{\theta_1} \dot{\theta_2} sen(\theta_1 - \theta_2) \nonumber
+\end{align}
+
+\begin{align}
+	l^2 m_2 \ddot{\theta_2} + l^2 m_2 \ddot{\theta_1} cos(\theta_1 - \theta_2) = m_2 l^2 \dot{\theta_1}^2 sen(\theta_1 - \theta_2) \nonumber \\
+	- g l m_2 sen(\theta_2)
+\end{align}
+
+Aquí se tiene un sistema de dos ecuaciones (4 y 5) y dos incógnitas $\theta_1$ y $\theta_2$. Resolviendo simultáneamente las ecuaciones de movimiento quedan
+\begin{equation}
+	\ddot\theta_1 = \frac {-g (2m_1+m_2)\sin\theta_1 -m_2g \sin(\theta_1-2\theta_2)-
+	2\sin(\theta_1-\theta_2)m_2(\dot\theta_2^2 l_2 + \dot\theta_1^2 l_1\cos(\theta_1-\theta_2))}
+	{l_1(2m_1+m_2-m_2\cos(2\theta_1 -2\theta_2))}
+\end{equation}
+
+y 
+
+\begin{equation}
+	\ddot\theta_2 = \frac {2 \sin(\theta_1 - \theta_2) (\dot\theta_1^2 l_1 (m_1 + m_2) 
+	+ g(m_1 + m_2) \cos \theta_1 + \dot\theta_2^2 l_2 m_2 \cos(\theta_1 - \theta_2)) } 
+	{l_2 (2 m_1 + m_2 - m_2 \cos(2 \theta_1 - 2 \theta_2))}
+\end{equation}
+
+\section{Solución numérica}
+Las ecuaciones (5) y (6) forman un sistema de ecuaciones diferenciales de segundo grado que no poseen solución analítica, por lo que se
+procederá a encontrar una solución numérica. Se utiliza el método de Runge-Kutta para resolver la velocidad y la posición de cada masa 
+del péndulo.
+
+\begin{figure}[h]
+	\centering
+		\includegraphics[width=0.50\textwidth]{Plot1.png}
+	\caption{Angulo 1 respecto a tiempo}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+		\includegraphics[width=0.50\textwidth]{Plot2.png}
+	\caption{Angulo 2 respecto a tiempo}
+\end{figure}
+
+A partir de las gráficas de los ángulos respecto al tiempo no se puede intuir ninguna propiedad especial del sistema, pero si se grafica la
+trayectoria de la $m_2$ se observa un comportamiento caótico.
+
+\begin{figure}[h]
+	\centering
+		\includegraphics[width=0.50\textwidth]{Plot4.png}
+	\caption{Ángulo 2 respecto a tiempo}
+\end{figure}
+
+\section{Referencias}
+\renewcommand*{\refname}{}
+\begin{thebibliography}{100}
+\bibitem{Significado} Illana, J. El significado de la relatividad. Universidad de Granada.
+\bibitem{Einstein} Einstein, Albert. On the Electrodynamics of Moving Bodies, 1905.
+\end{thebibliography}
+
+\end{document}

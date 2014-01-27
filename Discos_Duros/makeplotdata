@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Script que genera datos para graficar usando Mathematica.
+
+mkdir PlotData
+ITER=100
+
+for P in 10 30 40 58 107 115 168 233 245 308 304 383 387
+do
+   DUMPF=PlotData/$P
+   mkdir ${DUMPF}
+   python discos_duros.py --visual=False --particles=$P --iterations=${ITER} --makecrystal=True --dumpall=False --dumpfolder=${DUMPF} > /dev/null&
+done
+
+
+
