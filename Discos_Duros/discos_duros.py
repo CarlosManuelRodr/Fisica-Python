@@ -113,7 +113,7 @@ class disk:
     def __init__(self,X,Y,R):
         self.x = X
         self.y = Y
-        if withVPython: self.obj = visual.sphere(pos=(X,Y,0),radius=R, color=color.blue)
+        if withVPython: self.obj = sphere(pos=(X,Y,0),radius=R, color=color.blue)
 
 # Clase que provee interacción con el sistema de partículas
 class system:
@@ -312,8 +312,8 @@ s = system(initParticles)
 
 # Caja
 if withVPython:
-    visual.box(pos=(0,0,-1),axis=(1,0,0),height=s.l, width=0.2,length=s.l, material=materials.wood, color=color.white)
-    visual.rate(500)
+    box(pos=(0,0,-1),axis=(1,0,0),height=s.l, width=0.2,length=s.l, material=materials.wood, color=color.white)
+    rate(500)
 
 # Reportar opciones extras
 print '* Sigma: {0}'.format(s.sigma)
@@ -363,6 +363,9 @@ n = 0
 coefarray = []
 
 while n < iterations:
+    if withVPython:
+        rate(200)
+
     dfactor = s.shakeSystem()	# Mueve particulas   if n > ignoreiter:
     s.calcProb()	# Actualiza grid
     if dumpcoefd:

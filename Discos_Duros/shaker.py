@@ -271,6 +271,9 @@ n = 0
 coefarray = []
 
 while n < iterations:
+    if withVPython:
+        rate(200)
+    
     dfactor = s.shakeSystem()	# Mueve particulas   if n > ignoreiter:
     
     if(n % modulus == 0):

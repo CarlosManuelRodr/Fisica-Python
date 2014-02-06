@@ -142,7 +142,7 @@ menuButton.items.append(('Pendulo', lambda: CambiaVistaTierra(False)))
 # Iterar indefinidamente
 while True:
 	# Control de cuadros p segundo
-	visual.rate(p.cps)
+	rate(p.cps)
 	
 	# Calcula posición del péndulo por el método de Euler
 	vx += p.deltat*(2*velAngularTierra*math.sin(lambdaA)*vy - (omega**2)*x)

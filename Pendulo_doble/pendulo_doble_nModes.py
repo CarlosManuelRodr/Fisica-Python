@@ -16,7 +16,7 @@ from visual.controls import *
 scene.width = 600
 scene.height = 480
 class Parametros:
-	cps = 1500		# Cuadros por segundo
+	cps = 200		# Cuadros por segundo
 	deltat = 0.002	# Intervalo de tiempo para cada paso en la simulación
 	t = 0.0			# Contador de tiempo
 
@@ -181,7 +181,7 @@ resetButton = button(pos = (0,30), height = 15, width = 30, text = 'Reset', acti
 # Iterar indefinidamente
 while True:
 	# Control de cuadros por segundo
-	visual.rate(p.cps)
+	rate(p.cps)
 	
 	if m1 == 0 or m2 == 0:
 		pass

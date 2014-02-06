@@ -10,12 +10,10 @@
 
 from visual import *
 from visual.controls import *
-from numpy import *
-import pylab
 
 # Parámetros
 class Parametros:
-	cps=15
+	cps=16
 	deltat = 0.1
 	t = 0.0
 	plano = 100
@@ -77,9 +75,9 @@ sliderK = slider(pos=(-40,0), length=50, axis=(1,0,0), width=5, action=lambda: s
 sliderK.value = 0.5
 
 # Iterar indefinidamente
-while 1:
+while True:
 	# Control de cuadros p segundo
-	visual.rate(p.cps)
+	rate(p.cps)
 
 	# Actualizar posiciones
 	x1 = (v/k)*cos(phi)*(1 - exp(-k*p.t))

@@ -21,7 +21,7 @@ scene.width = 600
 scene.height = 480
 scene.title = 'Simulacion: Pendulo doble'
 
-cps = 300		# Cuadros por segundo
+cps = 200		# Cuadros por segundo
 deltat = 0.01	# Intervalo de tiempo para cada paso en la simulacion
 t = 0.0			# Contador de tiempo
 plotError = True
@@ -236,7 +236,7 @@ eTotalInit = 0.5*(l**2)*((vth1**2)*(m1+m2) + (vth2**2)*m2 + 2*m2*vth1*vth2*math.
 # Iterar indefinidamente
 while True:
 	# Control de cuadros por segundo
-	visual.rate(cps)
+	rate(cps)
 	
 	if m1 == 0 or m2 == 0:
 		pass

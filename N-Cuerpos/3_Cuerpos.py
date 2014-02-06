@@ -55,7 +55,7 @@ class PSat:
 	m = 40.0
 
 class Parametros:
-	cps = 350		# Cuadros por segundo
+	cps = 200		# Cuadros por segundo
 	deltaT = 0.005	# Intervalo temporal
 
 #Crea escena	

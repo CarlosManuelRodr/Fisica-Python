@@ -8,7 +8,10 @@ Instrucciones
 =============
 
 ```
-Ejemplo de uso: python discos_duros.py [opciones]
+Modo de uso: python discos_duros.py [opciones]
+Ejemplo: python discos_duros.py --particles=100 --iterations=10000
+
+Opciones:
 --particles=5000    | Necesaria           | Partículas para simulación.
 --iterations=10000  | Necesaria           | Veces que se mueven las partículas.
 --dumpfolder=dump1  | Opcional=.          | Sub-directorio para almacenar datos.

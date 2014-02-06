@@ -10,7 +10,6 @@
 
 from __future__ import division
 from random import *
-from numpy import *
 from visual import *
 from visual.graph import *
 from visual.controls import *
@@ -30,7 +29,7 @@ class disk:
         self.y = Y
         self.vx = VX
         self.vy = VY
-        self.obj = visual.sphere(pos=(X,Y,0),radius=R, color=pColor)
+        self.obj = sphere(pos=(X,Y,0),radius=R, color=pColor)
 
 class system:
     N = 0 			# Num de partículas.
@@ -312,7 +311,7 @@ if plotEnergy:
 
 t = 0
 while True:
-    visual.rate(500)
+    rate(260)
     s.moveParticles()
     p.moveParticles()
     transferParticles()

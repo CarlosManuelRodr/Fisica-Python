@@ -218,7 +218,7 @@ resetButton = button(pos = (0,30), height = 15, width = 30, text = 'Reset', acti
 # Iterar indefinidamente
 while True:
 	# Control de cuadros por segundo
-	visual.rate(p.cps)
+	rate(p.cps)
 	
 	if m == 0:
 		pass
