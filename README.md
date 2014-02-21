@@ -20,5 +20,5 @@ Instrucciones
 Para ejecutar las simulaciones se requiere instalar:
 
 * [Python](http://www.python.org/download/) (2.6 or 2.7)
-* [Python-Visual](http://www.vpython.org/contents/download/OlderVersions/VPython-Win-Py2.7-5.73.exe) (5.7)
+* [Python-Visual](http://www.vpython.org/) (6)
 
