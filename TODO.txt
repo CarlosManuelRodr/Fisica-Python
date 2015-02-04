@@ -1,1 +1,2 @@
 - Arreglar documento de Péndulo doble.
+- N_Cuerpos arreglar terminal.
