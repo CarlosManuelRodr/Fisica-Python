@@ -16,10 +16,10 @@ from numpy import *
 from visual import *
 import sys
 
-withVPython = True	# Switch de modo visual
-iterations = 100	# Número de veces que el sistema agita las partículas
-initParticles = 1	# Número inicial de partículas en el sistema
-totalLimit = 1          # Número total de partículas que acepta el sistema
+withVPython = True    # Switch de modo visual
+iterations = 100      # Número de veces que el sistema agita las partículas
+initParticles = 1     # Número inicial de partículas en el sistema
+totalLimit = 1        # Número total de partículas que acepta el sistema
 makecrystal = False
 boxlength = 20
 crystaltype = 0
@@ -90,11 +90,11 @@ class disk:
 
 # Clase que provee interacción con el sistema de partículas
 class system:
-    N = 0 			# Num de partículas
-    sigma = 1 			# Diámetro de partículas
-    l = sigma*boxlength        	# Ancho de caja
-    ds = dsmax  		# Salto mínimo
-    disks = []			# Lista con los discos
+    N = 0                 # Num de partículas
+    sigma = 1             # Diámetro de partículas
+    l = sigma*boxlength   # Ancho de caja
+    ds = dsmax            # Salto mínimo
+    disks = []            # Lista con los discos
     # Nótese la correción de índice (la resta -2). Esto es debido a que la función que detecta
     # la posición en la caja toma en cuenta el radio de la partícula, por lo tanto hay dos índices dentro del
     # grid en los cuales ninguna partícula podra caer.
@@ -170,23 +170,23 @@ class system:
 
     def maketriangcrystal(self):
         hfactor = math.sqrt(3.0)/2.0 # Factor de espaciamiento para arreglo triangular
-	even = True  # Indicador de paridad
-	corrf = 0.000001 # Correción de error en variable double
-	y =  -self.l/2 + self.sigma/2
-	while (y < self.l/2):
-		if even:
-        		x = -self.l/2 + self.sigma/2
-		else:
-			x = -self.l/2 + self.sigma
-		even = not even  # Desplaza las filas impares medio sigma
-		while (x < self.l/2):
-			if(not self.diskOverlap(x,y) and self.insideBox(x,y)):
-					self.disks.append(disk(x, y, self.sigma/2))
-					self.N += 1
-			if(self.N == totalLimit): return
-			x += self.sigma
-		y += hfactor*self.sigma+corrf
-				
+    even = True  # Indicador de paridad
+    corrf = 0.000001 # Correción de error en variable double
+    y =  -self.l/2 + self.sigma/2
+    while (y < self.l/2):
+        if even:
+                x = -self.l/2 + self.sigma/2
+        else:
+            x = -self.l/2 + self.sigma
+        even = not even  # Desplaza las filas impares medio sigma
+        while (x < self.l/2):
+            if(not self.diskOverlap(x,y) and self.insideBox(x,y)):
+                    self.disks.append(disk(x, y, self.sigma/2))
+                    self.N += 1
+            if(self.N == totalLimit): return
+            x += self.sigma
+        y += hfactor*self.sigma+corrf
+                
     # Mueve las partículas
     def shakeSystem(self):
         denied = 0
@@ -261,9 +261,9 @@ print('')
 print('Se agregaron {0} particulas'.format(s.N))
 
 
-modulus = iterations*0.01	# Controla la frecuencia con la que se actualiza el contador de avance
-dumpIndex = 0			# Índice de archivos de salida
-dumpMod = iterations / 10	# Controla el número de archivos de salida que se generarán
+modulus = iterations*0.01    # Controla la frecuencia con la que se actualiza el contador de avance
+dumpIndex = 0                # Índice de archivos de salida
+dumpMod = iterations / 10    # Controla el número de archivos de salida que se generarán
 
 # Loop principal
 print('')
@@ -274,7 +274,7 @@ while n < iterations:
     if withVPython:
         rate(200)
     
-    dfactor = s.shakeSystem()	# Mueve particulas   if n > ignoreiter:
+    dfactor = s.shakeSystem()    # Mueve particulas   if n > ignoreiter:
     
     if(n % modulus == 0):
         t = (n/iterations)*100

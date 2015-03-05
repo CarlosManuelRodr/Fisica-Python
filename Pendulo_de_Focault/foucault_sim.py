@@ -14,12 +14,9 @@ from visual.controls import *
 # Parámetros
 scene.width = 600
 scene.height = 480
-class Parametros:
-	cps = 200		# Cuadros por segundo
-	deltat = 0.01	# Intervalo de tiempo para cada paso en la simulación
-	t = 0.0			# Contador de tiempo
-
-p = Parametros()
+cps = 200        # Cuadros por segundo
+deltat = 0.01    # Intervalo de tiempo para cada paso en la simulación
+t = 0.0          # Contador de tiempo
 
 # Condiciones iniciales de la simulación
 x_init = 2.5
@@ -28,13 +25,13 @@ vx_init = 0.0
 vy_init = 0.0
 
 # Variables de la simulación
-x = x_init								# Posiciones y velocidades del péndulo
-y = y_init								# en el marco de referencia primado.
+x = x_init                               # Posiciones y velocidades del péndulo
+y = y_init                               # en el marco de referencia primado.
 vx = vx_init
 vy = vy_init
-omega = 1								# omega = raiz de g/l
-lambdaA = 1								# Ángulo del pendulo respecto a la tierra
-anguloTierra = 0						# Ángulo de rotación de la tierra
+omega = 1                                # omega = raiz de g/l
+lambdaA = 1                              # Ángulo del pendulo respecto a la tierra
+anguloTierra = 0                         # Ángulo de rotación de la tierra
 velAngularTierra = 0.1
 vistaTierra = True
 radioPendulo = sqrt(x**2 + y**2 + 4)
@@ -70,57 +67,57 @@ ls = curve(display = grafica, color = color.blue)
 
 # Funciones de los controles
 def Reset():
-	global x
-	global y
-	global vx
-	global vy
-	global anguloTirra
-	global p
-	global ls    
-	global grafica
-	ls.visible = False
-	del ls
-	ls = curve(display = grafica, color = color.blue)
-	grafica.forward = vector(0,0,-1)
-	
-	x = x_init
-	y = y_init
-	vx = vx_init
-	vy = vy_init
-	anguloTierra = 0
-	p.t = 0
-	
+    global x
+    global y
+    global vx
+    global vy
+    global anguloTirra
+    global p
+    global ls    
+    global grafica
+    ls.visible = False
+    del ls
+    ls = curve(display = grafica, color = color.blue)
+    grafica.forward = vector(0,0,-1)
+    
+    x = x_init
+    y = y_init
+    vx = vx_init
+    vy = vy_init
+    anguloTierra = 0
+    t = 0
+    
 def CambiaVistaTierra(val):
-	global vistaTierra
-	vistaTierra = val
-	if val == True:
-		scene.scale = vector(0.025,0.025,0.025)
-		scene.forward = vector(0,0,-1)
-		scene.center = vector(0,0,0)
-	else:
-		scene.scale = vector(0.1,0.1,0.1)
-		
+    global vistaTierra
+    vistaTierra = val
+    if val == True:
+        scene.scale = vector(0.025,0.025,0.025)
+        scene.forward = vector(0,0,-1)
+        scene.center = vector(0,0,0)
+    else:
+        scene.scale = vector(0.1,0.1,0.1)
+        
 def CambiaVelAngularTierra(val):
-	global velAngularTierra
-	global labelVAT
-	Reset()
-	velAngularTierra = (2*pi)/(3600.*24.)*val
-	labelVAT.text = "Vel. Tierra = 2pi/(24 h)*{0}".format(val)
-	
+    global velAngularTierra
+    global labelVAT
+    Reset()
+    velAngularTierra = (2*pi)/(3600.*24.)*val
+    labelVAT.text = "Vel. Tierra = 2pi/(24 h)*{0}".format(val)
+    
 def CambiaLambda(val):
-	global lambdaA
-	global labelLamb
-	Reset()
-	lambdaA = val*3.14159/180
-	labelLamb.text = "Lambda = {0} grados".format(val)
-	
+    global lambdaA
+    global labelLamb
+    Reset()
+    lambdaA = val*3.14159/180
+    labelLamb.text = "Lambda = {0} grados".format(val)
+    
 def CambiaOmega(val):
-	global omega
-	global labelOmega
-	Reset()
-	omega = val
-	labelOmega.text = "Omega = {0:.2}".format(val)
-	
+    global omega
+    global labelOmega
+    Reset()
+    omega = val
+    labelOmega.text = "Omega = {0:.2}".format(val)
+    
 # Control
 control = controls(title = 'Parametros', x = grafica.x, y = grafica.y + grafica.height + 8, width = 400, height = 400, range = 50)
 labelVAT = label(display = control.display, text = "Vel. Tierra = 0.1", pos = (30, 0), height = 8)
@@ -141,45 +138,45 @@ menuButton.items.append(('Pendulo', lambda: CambiaVistaTierra(False)))
 
 # Iterar indefinidamente
 while True:
-	# Control de cuadros p segundo
-	rate(p.cps)
-	
-	# Calcula posición del péndulo por el método de Euler
-	vx += p.deltat*(2*velAngularTierra*math.sin(lambdaA)*vy - (omega**2)*x)
-	vy += p.deltat*(-2*velAngularTierra*math.sin(lambdaA)*vx - (omega**2)*y)
-	x += p.deltat*vx
-	y += p.deltat*vy
-	z = -sqrt(radioPendulo**2 - x**2 - y**2) + 3
-	
-	# Transformación de coordenadas del péndulo
-	xP = -x*math.sin(anguloTierra) - y*math.sin(lambdaA)*math.cos(anguloTierra) + z*math.cos(anguloTierra)*math.cos(lambdaA)
-	yP = y*math.cos(lambdaA) + z*math.sin(lambdaA)
-	zP = x*math.cos(anguloTierra) - y*math.sin(lambdaA)*math.sin(anguloTierra) + z*math.sin(anguloTierra)*math.cos(lambdaA)
-	
-	# Cambio de coordenadas esféricas a coordenadas cartesianas
-	xPrime = math.cos(lambdaA)*math.cos(anguloTierra)
-	yPrime = math.sin(lambdaA)
-	zPrime = math.cos(lambdaA)*math.sin(anguloTierra)
+    # Control de cuadros p segundo
+    rate(cps)
+    
+    # Calcula posición del péndulo por el método de Euler
+    vx += deltat*(2*velAngularTierra*math.sin(lambdaA)*vy - (omega**2)*x)
+    vy += deltat*(-2*velAngularTierra*math.sin(lambdaA)*vx - (omega**2)*y)
+    x += deltat*vx
+    y += deltat*vy
+    z = -sqrt(radioPendulo**2 - x**2 - y**2) + 3
+    
+    # Transformación de coordenadas del péndulo
+    xP = -x*math.sin(anguloTierra) - y*math.sin(lambdaA)*math.cos(anguloTierra) + z*math.cos(anguloTierra)*math.cos(lambdaA)
+    yP = y*math.cos(lambdaA) + z*math.sin(lambdaA)
+    zP = x*math.cos(anguloTierra) - y*math.sin(lambdaA)*math.sin(anguloTierra) + z*math.sin(anguloTierra)*math.cos(lambdaA)
+    
+    # Cambio de coordenadas esféricas a coordenadas cartesianas
+    xPrime = math.cos(lambdaA)*math.cos(anguloTierra)
+    yPrime = math.sin(lambdaA)
+    zPrime = math.cos(lambdaA)*math.sin(anguloTierra)
 
-	# Actualizar posiciones
-	bolaPendulo.pos = vector(22*xPrime + xP, 22*yPrime + yP, 22*zPrime + zP)
-	barra.axis = vector(25*xPrime, 25*yPrime, 25*zPrime)
-	cablePendulo.pos = vector(22*xPrime + xP, 22*yPrime + yP, 22*zPrime + zP)
-	cablePendulo.axis = vector(3*xPrime-xP, 3*yPrime-yP, 3*zPrime-zP)
-	
-	# Cambia vista
-	if vistaTierra != True:
-		scene.center = vector(25*xPrime, 25*yPrime, 25*zPrime)
-		scene.forward = vector(25*xPrime, -90*yPrime, 25*zPrime)
+    # Actualizar posiciones
+    bolaPendulo.pos = vector(22*xPrime + xP, 22*yPrime + yP, 22*zPrime + zP)
+    barra.axis = vector(25*xPrime, 25*yPrime, 25*zPrime)
+    cablePendulo.pos = vector(22*xPrime + xP, 22*yPrime + yP, 22*zPrime + zP)
+    cablePendulo.axis = vector(3*xPrime-xP, 3*yPrime-yP, 3*zPrime-zP)
+    
+    # Cambia vista
+    if vistaTierra != True:
+        scene.center = vector(25*xPrime, 25*yPrime, 25*zPrime)
+        scene.forward = vector(25*xPrime, -90*yPrime, 25*zPrime)
 
-	# Actualizar rotación de tierra
-	tierra.rotate(angle = (anguloTierra - velAngularTierra*p.t))
-	
-	# Añade punto a gráfica
-	try: ls.append(pos = (x,y))
-	except: pass
+    # Actualizar rotación de tierra
+    tierra.rotate(angle = (anguloTierra - velAngularTierra*t))
+    
+    # Añade punto a gráfica
+    try: ls.append(pos = (x,y))
+    except: pass
 
-	# Incrementar reloj
-	anguloTierra = velAngularTierra*p.t
-	p.t += p.deltat
+    # Incrementar reloj
+    anguloTierra = velAngularTierra*t
+    t += deltat
 

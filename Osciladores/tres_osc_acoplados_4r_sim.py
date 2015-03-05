@@ -14,12 +14,9 @@ from visual.controls import *
 # Parámetros
 scene.width = 600
 scene.height = 480
-class Parametros:
-	cps = 200		# Cuadros por segundo
-	deltat = 0.01	# Intervalo de tiempo para cada paso en la simulación
-	t = 0.0			# Contador de tiempo
-
-p = Parametros()
+cps = 200        # Cuadros por segundo
+deltat = 0.01    # Intervalo de tiempo para cada paso en la simulación
+t = 0.0          # Contador de tiempo
 
 # Condiciones iniciales de la simulación
 x1_init = 5.0
@@ -82,105 +79,105 @@ curva3 = curve(display = grafica, color = color.green)
 
 # Funciones de los controles
 def Reset():
-	global x1
-	global x2
-	global x3
-	global vx1
-	global vx2
-	global vx3
-	global curva1
-	global curva2
-	global curva3
-	global grafica
-	curva1.visible = False
-	curva2.visible = False
-	curva3.visible = False
-	del curva1
-	del curva2
-	del curva3
-	curva1 = curve(display = grafica, color = color.blue)
-	curva2 = curve(display = grafica, color = color.red)
-	curva3 = curve(display = grafica, color = color.green)
-	grafica.forward = vector(0,0,-1)
-	
-	x1 = x1_init
-	x2 = x2_init
-	x3 = x3_init
-	vx1 = vx1_init
-	vx2 = vx2_init
-	vx3 = vx3_init
-	p.t = 0
-	
+    global x1
+    global x2
+    global x3
+    global vx1
+    global vx2
+    global vx3
+    global curva1
+    global curva2
+    global curva3
+    global grafica
+    curva1.visible = False
+    curva2.visible = False
+    curva3.visible = False
+    del curva1
+    del curva2
+    del curva3
+    curva1 = curve(display = grafica, color = color.blue)
+    curva2 = curve(display = grafica, color = color.red)
+    curva3 = curve(display = grafica, color = color.green)
+    grafica.forward = vector(0,0,-1)
+    
+    x1 = x1_init
+    x2 = x2_init
+    x3 = x3_init
+    vx1 = vx1_init
+    vx2 = vx2_init
+    vx3 = vx3_init
+    t = 0
+    
 def CambiaX1(val):
-	global x1
-	global labelX1
-	global x1_init
-	Reset()
-	x1_init = x1 = val
-	labelX1.text = "X1 = {0} ".format(val)
-	
+    global x1
+    global labelX1
+    global x1_init
+    Reset()
+    x1_init = x1 = val
+    labelX1.text = "X1 = {0} ".format(val)
+    
 def CambiaX2(val):
-	global x2
-	global labelX2
-	global x2_init
-	Reset()
-	x2_init = x2 = val
-	labelX2.text = "X2 = {0} ".format(val)
-	
+    global x2
+    global labelX2
+    global x2_init
+    Reset()
+    x2_init = x2 = val
+    labelX2.text = "X2 = {0} ".format(val)
+    
 def CambiaX3(val):
-	global x3
-	global labelX3
-	global x3_init
-	Reset()
-	x3_init = x3 = val
-	labelX3.text = "X3 = {0} ".format(val)
-	
+    global x3
+    global labelX3
+    global x3_init
+    Reset()
+    x3_init = x3 = val
+    labelX3.text = "X3 = {0} ".format(val)
+    
 def CambiaVx1(val):
-	global vx1
-	global labelVx1
-	global vx1_init
-	Reset()
-	vx1_init = vx1 = val
-	labelVx1.text = "Vx1 = {0} ".format(val)
+    global vx1
+    global labelVx1
+    global vx1_init
+    Reset()
+    vx1_init = vx1 = val
+    labelVx1.text = "Vx1 = {0} ".format(val)
 
 def CambiaVx2(val):
-	global vx2
-	global labelVx2
-	global vx2_init
-	Reset()
-	vx2_init = vx2 = val
-	labelVx2.text = "Vx2 = {0} ".format(val)
+    global vx2
+    global labelVx2
+    global vx2_init
+    Reset()
+    vx2_init = vx2 = val
+    labelVx2.text = "Vx2 = {0} ".format(val)
 
 def CambiaVx3(val):
-	global vx3
-	global labelVx3
-	global vx3_init
-	Reset()
-	vx3_init = vx3 = val
-	labelVx3.text = "Vx3 = {0} ".format(val)
-	
+    global vx3
+    global labelVx3
+    global vx3_init
+    Reset()
+    vx3_init = vx3 = val
+    labelVx3.text = "Vx3 = {0} ".format(val)
+    
 def CambiaM1(val):
-	global m1
-	global labelM1
-	Reset()
-	m1 = val
-	labelM1.text = "M1 = {0} ".format(val)
-	
+    global m1
+    global labelM1
+    Reset()
+    m1 = val
+    labelM1.text = "M1 = {0} ".format(val)
+    
 def CambiaM2(val):
-	global m2
-	global labelM2
-	Reset()
-	m2 = val
-	labelM2.text = "M2 = {0} ".format(val)
-	
+    global m2
+    global labelM2
+    Reset()
+    m2 = val
+    labelM2.text = "M2 = {0} ".format(val)
+    
 def CambiaK(val):
-	global k
-	global labelK
-	Reset()
-	k = val
-	labelK.text = "K = {0} ".format(val)
+    global k
+    global labelK
+    Reset()
+    k = val
+    labelK.text = "K = {0} ".format(val)
 
-	
+    
 # Control
 control = controls(title = 'Parametros', x = grafica.x, y = grafica.y + grafica.height + 8, width = 400, height = 400, range = 50)
 labelX1 = label(display = control.display, pos = (30, 0), height = 8)
@@ -232,43 +229,43 @@ resetButton = button(pos = (0,30), height = 15, width = 30, text = 'Reset', acti
 
 # Iterar indefinidamente
 while True:
-	# Control de cuadros por segundo
-	rate(p.cps)
-	
-	if m1 == 0 or m2 == 0:
-		pass
-	else:
-		# Calcula posición de las masas por el método de Euler
-		vx1 += p.deltat*(-(k/m1)*x1 - (k/m1)*(x1-x2))
-		vx2 += p.deltat*(-(k/m2)*(2*x2-x1-x3))
-		vx3 += p.deltat*(-(k/m1)*(x3-x2)-(k/m1)*x3)
-		x1 += p.deltat*vx1
-		x2 += p.deltat*vx2
-		x3 += p.deltat*vx3
-	
-	# Actualiza posiciones
-	particula1.pos = vector(refX1+x1,0,0)
-	particula2.pos = vector(refX2+x2,0,0)
-	particula3.pos = vector(refX3+x3,0,0)
-	texto1.pos = vector(refX1+x1,3,0)
-	texto2.pos = vector(refX2+x2,3,0)
-	texto3.pos = vector(refX3+x3,3,0)
-	resorte1.axis = vector(refX1+refPlano1+x1,0,0)
-	resorte2.pos = vector(refX1+x1, 0, 0)
-	resorte2.axis = vector(refX2+x2-x1-refX1,0,0)
-	resorte3.pos = vector(refX2+x2, 0, 0)
-	resorte3.axis = vector(refX3+x3-x2-refX2,0,0)
-	resorte4.pos = vector(refX3+x3,0,0)
-	resorte4.axis = vector(refPlano2-refX3-x3,0,0)
-	
-	# Añade punto a curva
-	try: curva1.append(pos = (p.t,x1))
-	except: pass
-	try: curva2.append(pos = (p.t,x2))
-	except: pass
-	try: curva3.append(pos = (p.t,x3))
-	except: pass
-	grafica.center = vector(p.t, 0, 0)
-	
-	# Incrementa reloj
-	p.t += p.deltat
+    # Control de cuadros por segundo
+    rate(cps)
+    
+    if m1 == 0 or m2 == 0:
+        pass
+    else:
+        # Calcula posición de las masas por el método de Euler
+        vx1 += deltat*(-(k/m1)*x1 - (k/m1)*(x1-x2))
+        vx2 += deltat*(-(k/m2)*(2*x2-x1-x3))
+        vx3 += deltat*(-(k/m1)*(x3-x2)-(k/m1)*x3)
+        x1 += deltat*vx1
+        x2 += deltat*vx2
+        x3 += deltat*vx3
+    
+    # Actualiza posiciones
+    particula1.pos = vector(refX1+x1,0,0)
+    particula2.pos = vector(refX2+x2,0,0)
+    particula3.pos = vector(refX3+x3,0,0)
+    texto1.pos = vector(refX1+x1,3,0)
+    texto2.pos = vector(refX2+x2,3,0)
+    texto3.pos = vector(refX3+x3,3,0)
+    resorte1.axis = vector(refX1+refPlano1+x1,0,0)
+    resorte2.pos = vector(refX1+x1, 0, 0)
+    resorte2.axis = vector(refX2+x2-x1-refX1,0,0)
+    resorte3.pos = vector(refX2+x2, 0, 0)
+    resorte3.axis = vector(refX3+x3-x2-refX2,0,0)
+    resorte4.pos = vector(refX3+x3,0,0)
+    resorte4.axis = vector(refPlano2-refX3-x3,0,0)
+    
+    # Añade punto a curva
+    try: curva1.append(pos = (t,x1))
+    except: pass
+    try: curva2.append(pos = (t,x2))
+    except: pass
+    try: curva3.append(pos = (t,x3))
+    except: pass
+    grafica.center = vector(t, 0, 0)
+    
+    # Incrementa reloj
+    t += deltat

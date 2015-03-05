@@ -14,12 +14,9 @@ from visual.controls import *
 # Parámetros
 scene.width = 600
 scene.height = 480
-class Parametros:
-	cps = 200		# Cuadros por segundo
-	deltat = 0.01	# Intervalo de tiempo para cada paso en la simulación
-	t = 0.0			# Contador de tiempo
-
-p = Parametros()
+cps = 200        # Cuadros por segundo
+deltat = 0.01    # Intervalo de tiempo para cada paso en la simulación
+t = 0.0          # Contador de tiempo
 
 # Condiciones iniciales de la simulación
 x_init = 10
@@ -66,78 +63,78 @@ curva = curve(display = grafica, color = color.blue)
 
 # Funciones de los controles
 def Reset():
-	global x
-	global vx
-	global curva
-	global grafica
-	curva.visible = False
-	del curva
-	curva = curve(display = grafica, color = color.blue)
-	grafica.forward = vector(0,0,-1)
-	
-	x = x_init
-	vx = vx_init
-	p.t = 0
-	
+    global x
+    global vx
+    global curva
+    global grafica
+    curva.visible = False
+    del curva
+    curva = curve(display = grafica, color = color.blue)
+    grafica.forward = vector(0,0,-1)
+    
+    x = x_init
+    vx = vx_init
+    t = 0
+    
 def CambiaX(val):
-	global x
-	global labelX1
-	global x_init
-	Reset()
-	x_init = x = val
-	labelX.text = "X = {0} ".format(val)
-	
+    global x
+    global labelX1
+    global x_init
+    Reset()
+    x_init = x = val
+    labelX.text = "X = {0} ".format(val)
+    
 def CambiaVx(val):
-	global vx
-	global labelVx
-	global vx_init
-	Reset()
-	vx_init = vx = val
-	labelVx.text = "Vx = {0} ".format(val)
-	
+    global vx
+    global labelVx
+    global vx_init
+    Reset()
+    vx_init = vx = val
+    labelVx.text = "Vx = {0} ".format(val)
+    
 def CambiaM(val):
-	global m
-	global labelM
-	Reset()
-	m = val
-	labelM.text = "M = {0} ".format(val)
-	
+    global m
+    global labelM
+    Reset()
+    m = val
+    labelM.text = "M = {0} ".format(val)
+    
 def CambiaK(val):
-	global k
-	global labelK
-	Reset()
-	k = val
-	labelK.text = "K = {0} ".format(val)
-	
+    global k
+    global labelK
+    Reset()
+    k = val
+    labelK.text = "K = {0} ".format(val)
+    
 def CambiaFo(val):
-	global Fo
-	global labelFo
-	Reset()
-	Fo = val
-	labelFo.text = "Fo = {0} ".format(val)
-	
+    global Fo
+    global labelFo
+    Reset()
+    Fo = val
+    labelFo.text = "Fo = {0} ".format(val)
+    
 def CambiaOmega(val):
-	global omega
-	global labelOmega
-	Reset()
-	omega = val
-	labelOmega.text = "Omega = {0} ".format(val)
-	
+    global omega
+    global labelOmega
+    Reset()
+    omega = val
+    labelOmega.text = "Omega = {0} ".format(val)
+    
 def CambiaGamma(val):
-	global gamma
-	global labelGamma
-	Reset()
-	gamma = val
-	labelGamma.text = "Gamma = {0} ".format(val)
-	
+    global gamma
+    global labelGamma
+    Reset()
+    gamma = val
+    labelGamma.text = "Gamma = {0} ".format(val)
+    
 def Amortiguar(val):
-	global amortiguado
-	amortiguado = val
-	
+    global amortiguado
+    amortiguado = val
+    
 def Forzar(val):
-	global forzado
-	forzado = val
-	
+    global forzado
+    forzado = val
+    
 # Control
 control = controls(title = 'Parametros', x = grafica.x, y = grafica.y + grafica.height + 8, width = 400, height = 400, range = 50)
 labelX = label(display = control.display, pos = (30, 0), height = 8)
@@ -181,37 +178,37 @@ resetButton = button(pos = (-25,30), height = 15, width = 30, text = 'Reset', ac
 
 # Iterar indefinidamente
 while True:
-	# Control de cuadros por segundo
-	rate(p.cps)
-	
-	if m == 0:
-		pass
-	else:
-		# Calcula posición de las masas por el método de Euler
-		vx += p.deltat*(-(k/m)*x)
-		if forzado == True:
-			vx += p.deltat*(Fo*math.sin(omega*p.t))
-		if amortiguado == True:
-			vx += p.deltat*(-gamma*vx)
-		x += p.deltat*vx
-	
-	# Actualiza posiciones
-	particula.pos = vector(refX+x,0,0)
-	resorte.axis = vector(refX+refPlano+x,0,0)
-	if forzado == True:
-		fExt.visible = True
-		fExt.pos = vector(refX+x,3,0)
-		if math.sin(omega*p.t) > 0:
-			fExt.axis = vector(7*abs(math.sin(omega*p.t)),0,0)
-		else:
-			fExt.axis = vector(-7*abs(math.sin(omega*p.t)),0,0)
-	else:
-		fExt.visible = False
-	
-	# Añade punto a curva
-	try: curva.append(pos = (p.t,x))
-	except: pass
-	grafica.center = vector(p.t, 0, 0)
-	
-	# Incrementa reloj
-	p.t += p.deltat
+    # Control de cuadros por segundo
+    rate(cps)
+    
+    if m == 0:
+        pass
+    else:
+        # Calcula posición de las masas por el método de Euler
+        vx += deltat*(-(k/m)*x)
+        if forzado == True:
+            vx += deltat*(Fo*math.sin(omega*t))
+        if amortiguado == True:
+            vx += deltat*(-gamma*vx)
+        x += deltat*vx
+    
+    # Actualiza posiciones
+    particula.pos = vector(refX+x,0,0)
+    resorte.axis = vector(refX+refPlano+x,0,0)
+    if forzado == True:
+        fExt.visible = True
+        fExt.pos = vector(refX+x,3,0)
+        if math.sin(omega*t) > 0:
+            fExt.axis = vector(7*abs(math.sin(omega*t)),0,0)
+        else:
+            fExt.axis = vector(-7*abs(math.sin(omega*t)),0,0)
+    else:
+        fExt.visible = False
+    
+    # Añade punto a curva
+    try: curva.append(pos = (t,x))
+    except: pass
+    grafica.center = vector(t, 0, 0)
+    
+    # Incrementa reloj
+    t += deltat

@@ -16,12 +16,12 @@ from numpy import *
 from visual import *
 import sys
 
-withVPython = True	# Switch de modo visual
-iterations = 100	# Número de veces que el sistema agita las partículas
-initParticles = 1	# Número inicial de partículas en el sistema
-totalLimit = 1          # Número total de partículas que acepta el sistema
-shakes = 2		# Intentos extras para agregar partículas
-dfolder = ''            # Directorio para dumps
+withVPython = True    # Switch de modo visual
+iterations = 100      # Número de veces que el sistema agita las partículas
+initParticles = 1     # Número inicial de partículas en el sistema
+totalLimit = 1        # Número total de partículas que acepta el sistema
+shakes = 2            # Intentos extras para agregar partículas
+dfolder = ''          # Directorio para dumps
 dumpall = False
 makecrystal = False
 ignoreiter = 0
@@ -117,13 +117,13 @@ class disk:
 
 # Clase que provee interacción con el sistema de partículas
 class system:
-    N = 0 			# Num de partículas
-    sigma = 1 			# Diámetro de partículas
-    l = sigma*boxlength        	# Ancho de caja
-    ds = dsmax  		# Salto mínimo
-    disks = []			# Lista con los discos
-    tGrid = 0.5*sigma		# Tamaño de elemento del grid (para conteo de frecuencia)
-    gridSize = int(l/tGrid)	# Tamaño total del grid (en sigmas)
+    N = 0                      # Num de partículas
+    sigma = 1                  # Diámetro de partículas
+    l = sigma*boxlength        # Ancho de caja
+    ds = dsmax                 # Salto mínimo
+    disks = []                 # Lista con los discos
+    tGrid = 0.5*sigma          # Tamaño de elemento del grid (para conteo de frecuencia)
+    gridSize = int(l/tGrid)    # Tamaño total del grid (en sigmas)
     # Nótese la correción de índice (la resta -2). Esto es debido a que la función que detecta
     # la posición en la caja toma en cuenta el radio de la partícula, por lo tanto hay dos índices dentro del
     # grid en los cuales ninguna partícula podra caer.
@@ -199,23 +199,23 @@ class system:
 
     def maketriangcrystal(self):
         hfactor = math.sqrt(3.0)/2.0 # Factor de espaciamiento para arreglo triangular
-	even = True  # Indicador de paridad
-	corrf = 0.000001 # Correción de error en variable double
-	y =  -self.l/2 + self.sigma/2
-	while (y < self.l/2):
-		if even:
-        		x = -self.l/2 + self.sigma/2
-		else:
-			x = -self.l/2 + self.sigma
-		even = not even  # Desplaza las filas impares medio sigma
-		while (x < self.l/2):
-			if(not self.diskOverlap(x,y) and self.insideBox(x,y)):
-					self.disks.append(disk(x, y, self.sigma/2))
-					self.N += 1
-			if(self.N == totalLimit): return
-			x += self.sigma
-		y += hfactor*self.sigma+corrf
-				
+    even = True  # Indicador de paridad
+    corrf = 0.000001 # Correción de error en variable double
+    y =  -self.l/2 + self.sigma/2
+    while (y < self.l/2):
+        if even:
+                x = -self.l/2 + self.sigma/2
+        else:
+            x = -self.l/2 + self.sigma
+        even = not even  # Desplaza las filas impares medio sigma
+        while (x < self.l/2):
+            if(not self.diskOverlap(x,y) and self.insideBox(x,y)):
+                    self.disks.append(disk(x, y, self.sigma/2))
+                    self.N += 1
+            if(self.N == totalLimit): return
+            x += self.sigma
+        y += hfactor*self.sigma+corrf
+                
     # Mueve las partículas
     def shakeSystem(self):
         denied = 0
@@ -251,7 +251,7 @@ class system:
 
         # Genera grid y flatGrid
         if(self.tGrid < self.sigma/2): 
-            self.gridSize = int(self.l/self.tGrid)-2	# Tamaño total del grid (en sigmas)
+            self.gridSize = int(self.l/self.tGrid)-2    # Tamaño total del grid (en sigmas)
 
         self.grid = zeros((self.gridSize, self.gridSize))
         self.flatGrid = zeros(self.gridSize)
@@ -271,25 +271,25 @@ class system:
 
     # Realiza un promedio (2D) del grid
     def makeFlatGrid(self):
-	for i in range(1, self.gridSize-1):
-		for j in range(0, self.gridSize):
-			self.flatGrid[j] += self.grid[i][j]
-	for i in range(0, self.gridSize):
-		self.flatGrid[i] /= self.gridSize
+    for i in range(1, self.gridSize-1):
+        for j in range(0, self.gridSize):
+            self.flatGrid[j] += self.grid[i][j]
+    for i in range(0, self.gridSize):
+        self.flatGrid[i] /= self.gridSize
 
     # Hace corte de la sección a la mitad en el grid 3D
     def makeSliceFlatGrid(self):
-	for i in range(0, self.gridSize):
-		self.flatGrid[i] = self.grid[int(self.gridSize/2)][i]
+    for i in range(0, self.gridSize):
+        self.flatGrid[i] = self.grid[int(self.gridSize/2)][i]
 
     # Dumpea el flatGrid en un archivo (flatGrid es la sección 2D de corte del grid 3D)
     def dumpFlatGrid(self, limit):
         fname = 'flatGrid.csv'
         if dfolder != '': fname = dfolder + '/' + fname
-	f = open(fname, 'w')
-	for i in range(0, self.gridSize):
-		f.write('{0}, {1}\n'.format(i, self.flatGrid[i]/(limit*self.tGrid**2)))
-	f.close()
+    f = open(fname, 'w')
+    for i in range(0, self.gridSize):
+        f.write('{0}, {1}\n'.format(i, self.flatGrid[i]/(limit*self.tGrid**2)))
+    f.close()
 
     # Guarda el grid en un archivo
     def dumpGrid(self, limit, name):
@@ -342,9 +342,9 @@ print('Se agregaron {0} particulas'.format(s.N))
 
 #sys.exit(2)
 
-modulus = iterations*0.01	# Controla la frecuencia con la que se actualiza el contador de avance
-dumpIndex = 0			# Índice de archivos de salida
-dumpMod = iterations / 10	# Controla el número de archivos de salida que se generarán
+modulus = iterations*0.01    # Controla la frecuencia con la que se actualiza el contador de avance
+dumpIndex = 0                # Índice de archivos de salida
+dumpMod = iterations / 10    # Controla el número de archivos de salida que se generarán
 ignoreModulus = ignoreiter*0.01
 
 # Loop principal
@@ -366,8 +366,8 @@ while n < iterations:
     if withVPython:
         rate(200)
 
-    dfactor = s.shakeSystem()	# Mueve particulas   if n > ignoreiter:
-    s.calcProb()	# Actualiza grid
+    dfactor = s.shakeSystem()    # Mueve particulas   if n > ignoreiter:
+    s.calcProb()                 # Actualiza grid
     if dumpcoefd:
         coefarray.append(dfactor)
     
@@ -384,7 +384,7 @@ while n < iterations:
 if(not dumpall):
     s.dumpGrid(iterations, 'dump')
 
-s.makeFlatGrid()	# Se selecciona el tipo de corte antes de dumpear el flatGrid
+s.makeFlatGrid()    # Se selecciona el tipo de corte antes de dumpear el flatGrid
 s.dumpFlatGrid(iterations)
 
 if dumpcoefd:

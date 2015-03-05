@@ -24,16 +24,16 @@ t = linspace(0,tau,tau*(1/h));
 
 # Soluciones analíticas
 for n in range(0,100,45):
-	#Iteramos sobre el valor de la colatitud
-	beta = radians(n);
-	x = A*cos(sqrt(g/l)*t)*sin(omega*cos(beta)*t);
-	y = A*cos(sqrt(g/l)*t)*cos(omega*cos(beta)*t);
+    #Iteramos sobre el valor de la colatitud
+    beta = radians(n);
+    x = A*cos(sqrt(g/l)*t)*sin(omega*cos(beta)*t);
+    y = A*cos(sqrt(g/l)*t)*cos(omega*cos(beta)*t);
 
-	#Detalles de la gráfica
-	pylab.plot(x,y,label=u'Colatitud = {0}°'.format(degrees(beta)));
-	if(n==45):
-		tx = x;
-		ty = y;	
+    #Detalles de la gráfica
+    pylab.plot(x,y,label=u'Colatitud = {0}°'.format(degrees(beta)));
+    if(n==45):
+        tx = x;
+        ty = y;    
 
 pylab.xlabel('$x$ (m)');
 pylab.ylabel('$y$ (m)');
@@ -70,17 +70,17 @@ error = zeros(tsize);
 n = 1;
 t = h;
 while (n < tsize):
-	# Calcular posiciones
-	xn[n] = xn[n-1] + vx*h;
-	yn[n] = yn[n-1] + vy*h;
-	# Calcular velocidades (método de Euler)
-	vx += h*( (-g/l)*xn[n] + (2*omega*sin(beta)/l)*xn[n]*vy + (2*omega*cos(beta))*vy );
-	vy += h*( (-g/l)*yn[n] + (2*omega*sin(beta)/l)*yn[n]*vy - (2*omega*cos(beta))*vx );
-	# Calcula energia
-	error[n] = abs(0.5*(vx**2 + vy**2) + 0.5*(g/l)*(xn[n]**2 + yn[n]**2) - energiaTot)/energiaTot; 
-	
-	n += 1;
-	t += h;
+    # Calcular posiciones
+    xn[n] = xn[n-1] + vx*h;
+    yn[n] = yn[n-1] + vy*h;
+    # Calcular velocidades (método de Euler)
+    vx += h*( (-g/l)*xn[n] + (2*omega*sin(beta)/l)*xn[n]*vy + (2*omega*cos(beta))*vy );
+    vy += h*( (-g/l)*yn[n] + (2*omega*sin(beta)/l)*yn[n]*vy - (2*omega*cos(beta))*vx );
+    # Calcula energia
+    error[n] = abs(0.5*(vx**2 + vy**2) + 0.5*(g/l)*(xn[n]**2 + yn[n]**2) - energiaTot)/energiaTot; 
+    
+    n += 1;
+    t += h;
 
 pylab.plot(xn,yn,label=u'Colatitud = {0}°'.format(degrees(beta)));
 pylab.xlabel('$x$ (m)');
@@ -104,7 +104,7 @@ pylab.savefig('focault_vecposicion_euler.png', format='png');
 
 # Comparación entre ambas soluciones
 
-# error
+# Error
 pylab.clf();
 pylab.plot(error,label='$eTot - e$');
 pylab.xlabel(u'Iteración');
@@ -114,4 +114,3 @@ pylab.grid(True);
 pylab.axis('auto');
 pylab.legend();
 pylab.savefig('focault_error_energy.png', format='png');
-
